@@ -18,6 +18,7 @@
     "typescript": "^5",
     "tailwindcss": "^3.4.17",
     "@tailwindcss/typography": "^0.5.10",
+    "tailwindcss-animate": "^1.0.7",
     "gray-matter": "^4.0.3",
     "unified": "^11.0.4",
     "remark": "^15.0.1",

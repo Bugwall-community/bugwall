@@ -120,7 +120,7 @@ ${markdown}
 
 请将此内容保存为 \`bugs/${filename}\` 文件。`
 
-    const githubUrl = `https://github.com/YOUR_USERNAME/YOUR_REPO/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}`
+    const githubUrl = `https://github.com/Bugwall-community/bugwall/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}`
 
     window.open(githubUrl, "_blank")
     toast.success("已打开GitHub，请在仓库中创建Issue")

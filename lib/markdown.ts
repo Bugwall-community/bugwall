@@ -46,7 +46,10 @@ export async function getVulnerabilityBySlug(slug: string): Promise<Vulnerabilit
       .use(remarkMath)
       .use(remarkHtml, { sanitize: false })
       .use(rehypeKatex)
-      .use(rehypeHighlight)
+      .use(rehypeHighlight, {
+        detect: true,
+        subset: false,
+      })
       .process(content)
 
     const htmlContent = processedContent.toString()

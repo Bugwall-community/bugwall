@@ -10,4 +10,5 @@ tags: ["代码问题"]
 ---
 
 ## CZ代码没写完
-ww每一个都是评论0
+ww每一个都是评论0         
+$Risk = \frac{Threat \times Vulnerability \times Impact}{Controls}$

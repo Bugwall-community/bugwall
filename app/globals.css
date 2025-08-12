@@ -1,0 +1,369 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 添加shadcn/ui必需的CSS变量定义 */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 94.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Animation keyframes */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-from-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-from-bottom-4 {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation utilities */
+@layer utilities {
+  .animate-in {
+    animation-fill-mode: both;
+  }
+
+  .fade-in {
+    animation-name: fade-in;
+    animation-duration: 0.5s;
+  }
+
+  .slide-in-from-bottom {
+    animation-name: slide-in-from-bottom;
+    animation-duration: 0.6s;
+  }
+
+  .slide-in-from-bottom-4 {
+    animation-name: slide-in-from-bottom-4;
+    animation-duration: 0.4s;
+  }
+}
+
+/* Custom styles for markdown content */
+@layer components {
+  .markdown-content {
+    @apply prose prose-gray dark:prose-invert max-w-none;
+  }
+
+  .markdown-content h1 {
+    @apply text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 pb-2;
+  }
+
+  .markdown-content h2 {
+    @apply text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200 mt-8;
+  }
+
+  .markdown-content h3 {
+    @apply text-xl font-medium mb-3 text-gray-700 dark:text-gray-300 mt-6;
+  }
+
+  .markdown-content h4 {
+    @apply text-lg font-medium mb-2 text-gray-700 dark:text-gray-300 mt-4;
+  }
+
+  .markdown-content p {
+    @apply mb-4 text-gray-600 dark:text-gray-400 leading-relaxed;
+  }
+
+  .markdown-content ul,
+  .markdown-content ol {
+    @apply mb-4 pl-6;
+  }
+
+  .markdown-content li {
+    @apply mb-2 text-gray-600 dark:text-gray-400;
+  }
+
+  .markdown-content blockquote {
+    @apply border-l-4 border-blue-500 pl-4 italic text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800 py-2 my-4 rounded-r;
+  }
+
+  .markdown-content code {
+    @apply bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono text-gray-800 dark:text-gray-200;
+  }
+
+  .markdown-content pre {
+    @apply bg-gray-900 dark:bg-gray-950 p-4 rounded-lg overflow-x-auto my-4 border;
+  }
+
+  .markdown-content pre code {
+    @apply bg-transparent p-0 text-gray-100;
+  }
+
+  .markdown-content table {
+    @apply w-full border-collapse border border-gray-300 dark:border-gray-700 my-4 rounded-lg overflow-hidden;
+  }
+
+  .markdown-content th,
+  .markdown-content td {
+    @apply border border-gray-300 dark:border-gray-700 px-4 py-2 text-left;
+  }
+
+  .markdown-content th {
+    @apply bg-gray-100 dark:bg-gray-800 font-semibold;
+  }
+
+  .markdown-content tr:nth-child(even) {
+    @apply bg-gray-50 dark:bg-gray-900/50;
+  }
+
+  /* Task list styling */
+  .markdown-content ul li[data-task] {
+    @apply list-none ml-0;
+  }
+
+  .markdown-content input[type="checkbox"] {
+    @apply mr-2;
+  }
+
+  /* Search highlight styles */
+  .markdown-content mark {
+    @apply bg-yellow-200 dark:bg-yellow-800 px-1 rounded;
+  }
+
+  /* Card hover effects */
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  /* Button hover effects */
+  .btn-hover {
+    @apply transition-all duration-200 hover:scale-105;
+  }
+}
+
+/* Wrapped custom styles in proper @layer directives */
+
+/* KaTeX styles */
+.katex {
+  font-size: 1.1em;
+}
+
+/* Highlight.js theme adjustments */
+.hljs {
+  background: #0d1117 !important;
+  color: #e6edf3 !important;
+}
+
+/* Dark mode specific adjustments */
+@media (prefers-color-scheme: dark) {
+  .hljs {
+    background: #0d1117 !important;
+  }
+}
+
+/* Light mode code highlighting */
+html[data-theme="light"] .hljs {
+  background: #f6f8fa !important;
+  color: #24292f !important;
+}
+
+/* Dark mode code highlighting */
+html[data-theme="dark"] .hljs {
+  background: #0d1117 !important;
+  color: #e6edf3 !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
+}
+
+/* Giscus theme adjustments */
+.giscus-frame {
+  @apply w-full;
+}
+
+/* Improved focus states for accessibility */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  @apply outline-2 outline-offset-2 outline-primary;
+}
+
+/* Better contrast for links in dark mode */
+.dark a {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+/* Improved table styling for dark mode */
+.dark .markdown-content table {
+  @apply border-gray-600;
+}
+
+.dark .markdown-content th,
+.dark .markdown-content td {
+  @apply border-gray-600;
+}
+
+.dark .markdown-content th {
+  @apply bg-gray-700;
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Smooth transitions */
+* {
+  @apply transition-colors duration-200;
+}
+
+/* Improved accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .markdown-content {
+    @apply prose-slate;
+  }
+
+  .markdown-content code {
+    @apply bg-black text-white dark:bg-white dark:text-black;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .markdown-content {
+    @apply text-black;
+  }
+
+  .markdown-content pre {
+    @apply bg-gray-100 text-black border;
+  }
+}

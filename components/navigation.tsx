@@ -13,7 +13,7 @@ export function Navigation() {
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-2">
               <Shield className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold">漏洞追踪器</span>
+              <span className="text-xl font-bold">BugWall</span>
             </Link>
             <div className="hidden md:flex items-center space-x-6">
               <Link

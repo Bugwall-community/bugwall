@@ -1,12 +1,14 @@
 import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
-import { remark } from "remark"
-import remarkHtml from "remark-html"
+import { unified } from "unified"
+import remarkParse from "remark-parse"
 import remarkMath from "remark-math"
 import remarkGfm from "remark-gfm"
+import remarkRehype from "remark-rehype"
 import rehypeKatex from "rehype-katex"
 import rehypeHighlight from "rehype-highlight"
+import rehypeStringify from "rehype-stringify"
 import type { Vulnerability, VulnerabilityFrontmatter } from "./types"
 
 const bugsDirectory = path.join(process.cwd(), "bugs")
@@ -41,15 +43,18 @@ export async function getVulnerabilityBySlug(slug: string): Promise<Vulnerabilit
     const { data, content } = matter(fileContents)
 
     // Process markdown content
-    const processedContent = await remark()
-      .use(remarkGfm)
-      .use(remarkMath)
-      .use(remarkHtml, { sanitize: false })
-      .use(rehypeKatex)
+    const processedContent = await unified()
+      .use(remarkParse) // Parse markdown
+      .use(remarkGfm) // GitHub flavored markdown
+      .use(remarkMath) // Math support
+      .use(remarkRehype, { allowDangerousHtml: true }) // Convert to HTML AST
+      .use(rehypeKatex) // Process LaTeX math
       .use(rehypeHighlight, {
         detect: true,
         subset: false,
-      })
+        ignoreMissing: true,
+      }) // Syntax highlighting
+      .use(rehypeStringify, { allowDangerousHtml: true }) // Convert to HTML string
       .process(content)
 
     const htmlContent = processedContent.toString()

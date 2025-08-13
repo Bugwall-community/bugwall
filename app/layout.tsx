@@ -18,8 +18,8 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "BugWALL",
-  description: "CWALL的漏洞追踪器（社区）",
+  title: "BUGwall",
+  description: "Bugwall Community",
   generator: "Next.js",
 }
 

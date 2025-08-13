@@ -28,10 +28,10 @@ export default async function HomePage() {
           <div className="py-16 px-8">
             <div className="flex items-center justify-center mb-4 hero-title">
               <Sparkles className="h-8 w-8 text-primary mr-2" />
-              <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl">BugWall</h1>
+              <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl">BUGWALL</h1>
             </div>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed hero-subtitle">
-              由BugWall Community提供的Cwall BUG追踪器
+              BUGWALL Community提供的CWALL BUG追踪器
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center hero-buttons">
               <Button asChild size="lg" className="group">

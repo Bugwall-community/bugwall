@@ -5,8 +5,9 @@
 /* 添加KaTeX CSS导入 */
 @import "katex/dist/katex.min.css";
 
-/* 添加highlight.js主题导入 */
-@import "highlight.js/styles/github-dark.css";
+/* 添加highlight.js主题导入 - 浅色和深色主题 */
+@import "highlight.js/styles/github.css" (prefers-color-scheme: light);
+@import "highlight.js/styles/github-dark.css" (prefers-color-scheme: dark);
 
 /* 添加shadcn/ui必需的CSS变量定义 */
 @layer base {
@@ -172,12 +173,26 @@
     @apply bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono text-gray-800 dark:text-gray-200;
   }
 
-  /* 改进代码块样式 */
+  /* 改进代码块样式 - 修复浅色模式代码高亮 */
   .markdown-content pre {
-    @apply bg-gray-900 dark:bg-gray-950 p-4 rounded-lg overflow-x-auto my-4 border border-gray-700;
+    @apply p-4 rounded-lg overflow-x-auto my-4 border;
   }
 
-  .markdown-content pre code {
+  /* 浅色模式代码块 - 修复高亮颜色 */
+  :root .markdown-content pre {
+    @apply bg-gray-50 border-gray-200;
+  }
+
+  :root .markdown-content pre code {
+    @apply bg-transparent p-0 text-gray-900 text-sm leading-relaxed;
+  }
+
+  /* 深色模式代码块 */
+  .dark .markdown-content pre {
+    @apply bg-gray-900 border-gray-700;
+  }
+
+  .dark .markdown-content pre code {
     @apply bg-transparent p-0 text-gray-100 text-sm leading-relaxed;
   }
 
@@ -221,6 +236,36 @@
   .btn-hover {
     @apply transition-all duration-200 hover:scale-105;
   }
+
+  /* Notion编辑器样式 */
+  .notion-editor {
+    @apply border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900;
+  }
+
+  .notion-editor textarea {
+    @apply w-full p-4 bg-transparent border-none outline-none resize-none text-gray-900 dark:text-gray-100;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .notion-editor textarea::placeholder {
+    @apply text-gray-400 dark:text-gray-500;
+  }
+
+  .notion-toolbar {
+    @apply flex items-center gap-1 p-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800;
+  }
+
+  .notion-toolbar button {
+    @apply h-8 w-8 p-0 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors;
+  }
+
+  .notion-toolbar button.active {
+    @apply bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300;
+  }
+
+  .notion-status-bar {
+    @apply px-4 py-2 text-xs text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800;
+  }
 }
 
 /* 改进KaTeX样式 */
@@ -234,58 +279,91 @@
   text-align: center !important;
 }
 
-/* 改进代码高亮样式 */
-.hljs {
+/* 修复浅色模式代码高亮样式 */
+:root .hljs {
+  background: #f8f9fa !important;
+  color: #24292f !important;
+  padding: 1rem !important;
+  border-radius: 0.5rem !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  border: 1px solid #e1e4e8 !important;
+}
+
+:root .hljs-keyword,
+:root .hljs-selector-tag,
+:root .hljs-built_in {
+  color: #d73a49 !important;
+  font-weight: 600 !important;
+}
+
+:root .hljs-string,
+:root .hljs-attr {
+  color: #032f62 !important;
+}
+
+:root .hljs-number,
+:root .hljs-literal {
+  color: #005cc5 !important;
+}
+
+:root .hljs-comment {
+  color: #6a737d !important;
+  font-style: italic;
+}
+
+:root .hljs-function,
+:root .hljs-title {
+  color: #6f42c1 !important;
+  font-weight: 600 !important;
+}
+
+:root .hljs-variable,
+:root .hljs-name {
+  color: #e36209 !important;
+}
+
+/* 深色模式代码高亮样式 */
+.dark .hljs {
   background: #0d1117 !important;
   color: #e6edf3 !important;
   padding: 1rem !important;
   border-radius: 0.5rem !important;
   font-size: 0.875rem !important;
   line-height: 1.5 !important;
+  border: 1px solid #30363d !important;
 }
 
-/* 主题特定的代码高亮 */
-html[data-theme="light"] .hljs,
-.light .hljs {
-  background: #f6f8fa !important;
-  color: #24292f !important;
-}
-
-html[data-theme="dark"] .hljs,
-.dark .hljs {
-  background: #0d1117 !important;
-  color: #e6edf3 !important;
-}
-
-/* 代码高亮语法颜色 */
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-built_in {
+.dark .hljs-keyword,
+.dark .hljs-selector-tag,
+.dark .hljs-built_in {
   color: #ff7b72 !important;
+  font-weight: 600 !important;
 }
 
-.hljs-string,
-.hljs-attr {
+.dark .hljs-string,
+.dark .hljs-attr {
   color: #a5d6ff !important;
 }
 
-.hljs-number,
-.hljs-literal {
+.dark .hljs-number,
+.dark .hljs-literal {
   color: #79c0ff !important;
 }
 
-.hljs-comment {
+.dark .hljs-comment {
   color: #8b949e !important;
   font-style: italic;
 }
 
-.hljs-function,
-.hljs-title {
+.dark .hljs-function,
+.dark .hljs-title {
   color: #d2a8ff !important;
+  font-weight: 600 !important;
 }
 
-.hljs-variable,
-.hljs-name {
+.dark .hljs-variable,
+.dark .hljs-name {
   color: #ffa657 !important;
 }
 

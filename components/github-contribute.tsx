@@ -4,7 +4,6 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -15,8 +14,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Github, Plus, ExternalLink } from "lucide-react"
+import { Github, Plus, ExternalLink, FileText } from "lucide-react"
 import { toast } from "sonner"
+import { NotionEditor } from "./notion-editor"
 
 interface VulnerabilityForm {
   id: string
@@ -120,11 +120,29 @@ ${markdown}
 
 请将此内容保存为 \`bugs/${filename}\` 文件。`
 
-    const githubUrl = `https://github.com/Bugwall-community/bugwall/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}`
+    const githubUrl = `https://github.com/YOUR_USERNAME/YOUR_REPO/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}`
 
     window.open(githubUrl, "_blank")
     toast.success("已打开GitHub，请在仓库中创建Issue")
     setIsOpen(false)
+  }
+
+  const handleSubmitToNotion = async () => {
+    const markdown = generateMarkdown()
+
+    try {
+      // 复制到剪贴板
+      await navigator.clipboard.writeText(markdown)
+      toast.success("Markdown内容已复制到剪贴板")
+
+      // 打开Notion页面
+      window.open("https://succulent-cover-77d.notion.site/24e1103d5d09800e8490d16d1b893391?pvs=105", "_blank")
+
+      setIsOpen(false)
+    } catch (err) {
+      toast.error("复制到剪贴板失败，请手动复制")
+      console.error("Failed to copy to clipboard:", err)
+    }
   }
 
   return (
@@ -135,18 +153,18 @@ ${markdown}
           贡献漏洞
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Github className="h-5 w-5" />
             向GitHub贡献漏洞
           </DialogTitle>
           <DialogDescription>
-            填写漏洞信息，我们将生成标准格式的Markdown文件，您可以通过GitHub Issue提交。
+            使用Notion风格编辑器填写漏洞信息，支持实时Markdown渲染、LaTeX数学公式和代码高亮。
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="id">漏洞ID *</Label>
@@ -185,13 +203,12 @@ ${markdown}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">漏洞描述 *</Label>
-            <Textarea
-              id="description"
-              placeholder="详细描述漏洞的具体情况..."
+            <Label>漏洞描述 *</Label>
+            <NotionEditor
               value={form.description}
-              onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
-              rows={3}
+              onChange={(content) => setForm((prev) => ({ ...prev, description: content }))}
+              placeholder="详细描述漏洞的具体情况，支持Markdown语法、LaTeX公式和代码高亮。输入 # 自动转换为标题，输入 - 自动转换为列表..."
+              className="min-h-[300px]"
             />
           </div>
 
@@ -243,6 +260,15 @@ ${markdown}
           <div className="flex justify-end gap-2 pt-4">
             <Button variant="outline" onClick={() => setIsOpen(false)}>
               取消
+            </Button>
+            <Button
+              onClick={handleSubmitToNotion}
+              disabled={!form.id || !form.title || !form.description || !form.category}
+              variant="secondary"
+              className="gap-2"
+            >
+              <FileText className="h-4 w-4" />
+              提交到Notion表单
             </Button>
             <Button
               onClick={handleSubmitToGitHub}

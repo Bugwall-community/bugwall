@@ -71,6 +71,29 @@ export async function getVulnerabilityBySlug(slug: string): Promise<Vulnerabilit
   }
 }
 
+export async function processMarkdown(content: string): Promise<string> {
+  try {
+    const processedContent = await unified()
+      .use(remarkParse) // Parse markdown
+      .use(remarkGfm) // GitHub flavored markdown
+      .use(remarkMath) // Math support
+      .use(remarkRehype, { allowDangerousHtml: true }) // Convert to HTML AST
+      .use(rehypeKatex) // Process LaTeX math
+      .use(rehypeHighlight, {
+        detect: true,
+        subset: false,
+        ignoreMissing: true,
+      }) // Syntax highlighting
+      .use(rehypeStringify, { allowDangerousHtml: true }) // Convert to HTML string
+      .process(content)
+
+    return processedContent.toString()
+  } catch (error) {
+    console.error("Error processing markdown:", error)
+    return `<p>处理Markdown时出错: ${error}</p>`
+  }
+}
+
 export function getCategories(): string[] {
   if (!fs.existsSync(bugsDirectory)) {
     return []
